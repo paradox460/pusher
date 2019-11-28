@@ -9,4 +9,17 @@ It takes two symbol definitions at compile time to do anything
 
 ```sh
 
-nimble
+nim c -d:release -d:token="<YOUR API TOKEN HERE>" -d:userKey="<YOUR USER KEY HERE>" pusher
+
+```
+
+Once thats done, you get a nice binary out the end, to do with what you want
+
+## Usage
+Assuming you compiled it properly, its a pretty simple program:
+
+```sh
+pusher -t="Title" body string goes here
+```
+
+If you omit the title param, it goes with whatever the Pusher config has set
