@@ -5,20 +5,25 @@ const userKey {.strdefine.}: string = ""
 const pushoverApi = "https://api.pushover.net/1/messages.json"
 
 var options = initOptParser();
-var message: string
+var message = ""
 var title = ""
 
-options.next();
-case options.kind
-  of cmdEnd: quit(1)
-  of cmdShortOption:
-    if options.key == "t":
-      title = options.val
-      message = options.cmdLineRest
-    else:
-      message = commandLineParams().join(" ")
-  else:
-    message = commandLineParams().join(" ")
+while true:
+  options.next()
+  case options.kind
+    of cmdEnd: break
+    of cmdShortOption:
+      if options.key == "t":
+        title = options.val
+      if options.key == "m":
+        message = options.val
+    of cmdLongOption:
+      if options.key == "title":
+        title = options.val
+      if options.key == "message":
+        message = options.val
+    of cmdArgument:
+      continue
 
 let client = newHttpClient()
 client.headers = newHttpHeaders({ "Content-Type": "application/json" })
